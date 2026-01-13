@@ -22,8 +22,8 @@ import org.springframework.transaction.TransactionManager;
  * @author mbatista
  * @description buid data source repository
  */
-@Configuration
-@EnableJdbcRepositories
+@Configuration()
+@EnableJdbcRepositories(basePackages = "com.github.manoelfilho902.simple.spring.api")
 public class Dataset extends AbstractJdbcConfiguration{
 
     private static final System.Logger LOG = System.getLogger(Dataset.class.getName());
@@ -35,7 +35,7 @@ public class Dataset extends AbstractJdbcConfiguration{
      * @return 
      */
     @Bean
-    DataSource dataSource(@Value("${datasource.url}") String url, @Value("${datasource.username}") String user, @Value("${datasource.password}") String pass){
+    public DataSource dataSource(@Value("${datasource.url}") String url, @Value("${datasource.username}") String user, @Value("${datasource.password}") String pass){
         HikariDataSource ds = new HikariDataSource();
         ds.setJdbcUrl(url);
         ds.setDriverClassName("org.postgresql.Driver");
@@ -50,7 +50,7 @@ public class Dataset extends AbstractJdbcConfiguration{
      * @return 
      */
     @Bean
-    NamedParameterJdbcOperations jdbcOperations(DataSource dataSource){
+    public NamedParameterJdbcOperations jdbcOperations(DataSource dataSource){
         return new NamedParameterJdbcTemplate(dataSource);
     }
     /**
@@ -58,8 +58,8 @@ public class Dataset extends AbstractJdbcConfiguration{
      * @param ds
      * @return 
      */
-    @Bean
-    TransactionManager manager(DataSource ds){
+    @Bean(name = {"transactionManager"})
+    public TransactionManager manager(DataSource ds){
         return new DataSourceTransactionManager(ds);
     }
 

@@ -4,7 +4,7 @@
  */
 package com.github.manoelfilho902.simple.spring.api.repository;
 
-import com.github.manoelfilho902.simple.spring.api.model.entity.User;
+import com.github.manoelfilho902.simple.spring.api.model.entity.Profile;
 import com.github.manoelfilho902.simple.spring.api.repository.common.RepositoryBase;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @author Manoel Batista <manoelbatista902@gmail.com>
  */
 @Repository
-public interface UserRepository extends RepositoryBase<User, Integer>{
+public interface ProfileRepository extends RepositoryBase<Profile, Integer>{
     
 }
