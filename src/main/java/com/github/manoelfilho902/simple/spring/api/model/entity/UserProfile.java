@@ -5,9 +5,8 @@
 package com.github.manoelfilho902.simple.spring.api.model.entity;
 
 import com.github.manoelfilho902.simple.spring.api.model.entity.common.EntityBase;
-import java.util.List;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 /**
@@ -16,11 +15,11 @@ import org.springframework.data.relational.core.mapping.Table;
  */
 @Table(name = "user_profile")
 public class UserProfile extends EntityBase {
-
+    @Id
     @Column("id_user")
     private Integer idUser;
-    @MappedCollection(idColumn = "id", keyColumn = "id")
-    private List<Profile> profiles;
+    @Column("id_profile")
+    private Integer idProfile;
 
     public UserProfile() {
     }
@@ -37,12 +36,12 @@ public class UserProfile extends EntityBase {
         this.idUser = idUser;
     }
 
-    public List<Profile> getProfiles() {
-        return profiles;
+    public Integer getIdProfile() {
+        return idProfile;
     }
 
-    public void setProfiles(List<Profile> profiles) {
-        this.profiles = profiles;
-    }
+    public void setIdProfile(Integer idProfile) {
+        this.idProfile = idProfile;
+    }   
 
 }

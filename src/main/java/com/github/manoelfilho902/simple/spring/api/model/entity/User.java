@@ -7,7 +7,9 @@ package com.github.manoelfilho902.simple.spring.api.model.entity;
 import com.github.manoelfilho902.simple.spring.api.model.entity.common.EntityBase;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.List;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
@@ -32,8 +34,11 @@ public class User extends EntityBase implements UserDetails {
     @Column("password")
     private String password;
 
-    @MappedCollection(idColumn = "id_user")
-    private UserProfile profiles;
+    @MappedCollection(idColumn = "id_user", keyColumn = "id_user")
+    private List<UserProfile> profilesRef;
+
+    @Transient
+    private List<Profile> profiles;
 
     public User() {
 
@@ -115,17 +120,26 @@ public class User extends EntityBase implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return profiles.getProfiles();
+    public String getUsername() {
+        return email;
     }
 
-    public void setProfiles(UserProfile profiles) {
+    public List<UserProfile> getProfilesRef() {
+        return profilesRef;
+    }
+
+    public void setProfilesRef(List<UserProfile> profilesRef) {
+        this.profilesRef = profilesRef;
+    }
+
+    public void setProfiles(List<Profile> profiles) {
         this.profiles = profiles;
     }
 
     @Override
-    public String getUsername() {
-        return email;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return profiles;
     }
+       
 
 }
